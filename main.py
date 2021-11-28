@@ -2,14 +2,14 @@ import sys
 
 from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtWidgets import QMainWindow, QApplication
-from PyQt5 import uic
+from Circle import Ui_MainWindow
 from random import choice
 
 
-class Example(QMainWindow):
+class Example(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("Circle.ui", self)
+        self.setupUi(self)
         self.do_paint = False
         self.pushButton.clicked.connect(self.paint)
 
@@ -25,8 +25,9 @@ class Example(QMainWindow):
         self.repaint()
 
     def draw_circle(self, qp):
-        qp.setBrush(QColor(255, 255, 0))
-        qp.setPen(QColor(255, 255, 0))
+        color = (choice((range(0, 255))), choice((range(0, 255))), choice((range(0, 255))))
+        qp.setBrush(QColor(*color))
+        qp.setPen(QColor(*color))
         x, y = choice(range(10, 590)), choice(range(10, 590))
         r = choice(range(10, 280))
         while not (0 < x - r and x + r < 800 and 0 < y - r and y + r < 500):
